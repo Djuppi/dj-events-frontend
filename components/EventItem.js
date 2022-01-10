@@ -12,7 +12,7 @@ export default function EventItem({evt: {attributes}, evt}) {
 
             <div className={styles.info}>
                 <span>
-                    {attributes.date} at {attributes.time}
+                    {new Date(attributes.date).toLocaleDateString('da-DK')} at {attributes.time}
                 </span>
                 <h3>{attributes.name}</h3>
             </div>

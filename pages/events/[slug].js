@@ -27,7 +27,7 @@ export default function EventPage({evt: {attributes, id}, evt}) {
                     </a>
                 </div>
                 <span>
-                    {attributes.time} at {attributes.date}
+                {new Date(attributes.date).toLocaleDateString('da-DK')} at {attributes.time}
                 </span>
                 <h1>{attributes.name}</h1>
                     <div className={styles.image}>
