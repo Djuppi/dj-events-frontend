@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout';
+import GoBack from '@/components/Back';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -11,12 +12,7 @@ export default function SearchPage({events}) {
 
     return (
         <Layout title='Search Results'>
-        <Link href='/events'>
-            <a>
-                <FaArrowLeft /> Go Back
-            </a>
-        
-        </Link>
+        <GoBack href={'/events'} />
         <h1>Search Results for {router.query.term}</h1>
         {events.length === 0 && <h3>No events to show</h3>}
 
