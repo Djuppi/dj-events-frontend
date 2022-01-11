@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/styles/EventItem.module.css';
 
-export default function EventItem({evt: {attributes}, evt}) {
+export default function EventItem({evt: {attributes}}) {
     
     const image = attributes.image.data ? attributes.image.data.attributes.formats.thumbnail.url : '/images/event-default.png';
     return (
