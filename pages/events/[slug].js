@@ -1,3 +1,6 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 import { FaPencilAlt, FaTimes } from 'react-icons/fa'
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,11 +10,25 @@ import styles from '@/styles/Event.module.css';
 
 export default function EventPage({evt: {attributes, id}, evt}) {
 
-    const deleteEvent = () => {
-        console.log('delete')
+    const router = useRouter();
+
+    const deleteEvent = async () => {
+        if(confirm('Are you sure?')) {
+            const res = await fetch(`${API_URL}/api/events/${id}`, {
+                method: 'DELETE'
+            })
+
+            const data = await res.json()
+
+            if(!res.ok) {
+                toast.error(data.message)
+            } else {
+                router.push('/events')
+            }
+        }
     }
 
-    const image = evt.attributes.image.data.attributes.formats.medium;
+    const image = attributes.image.data ? attributes.image.data.attributes.formats.medium.url : '/images/event-default.png';
 
     return (
         <Layout>
@@ -30,8 +47,9 @@ export default function EventPage({evt: {attributes, id}, evt}) {
                 {new Date(attributes.date).toLocaleDateString('da-DK')} at {attributes.time}
                 </span>
                 <h1>{attributes.name}</h1>
+                <ToastContainer />
                     <div className={styles.image}>
-                       <Image src={image ? image.url : '/images/event-default.png'} width={960} height={600} /> 
+                       <Image src={image ? image : '/images/event-default.png'} width={960} height={600} /> 
                     </div>
 
                 <h2>Performers</h2>
@@ -78,7 +96,6 @@ export const getStaticProps= async ({ params: {slug} }) => {
     return {
         props: {
             evt: events.data[0],
-            image: events.data[0].attributes.image.data.attributes.formats,
         },
         revalidate: 1,
     }

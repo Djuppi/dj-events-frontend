@@ -10,14 +10,14 @@ import styles from '@/styles/Form.module.css';
 
 export default function AddEventsPage() {
     const [values, setValues] = useState({
-        name: '',
-        performers: '',
-        venue: '',
-        address: '',
-        date: '',
-        time: '',
-        description: '',
-    });
+            name: '',
+            performers: '',
+            venue: '',
+            address: '',
+            date: '',
+            time: '',
+            description: '',
+        });
 
     const router = useRouter();
 
@@ -29,23 +29,27 @@ export default function AddEventsPage() {
         if(hasEmptyFields) {
             toast.error('Please fill in all fields')
         } 
-        console.log(JSON.stringify(values))
+        let data = {data: {...values}}
+
+
+        data.data.date = new Date(data.data.date).toISOString();
 
         const res = await fetch(`${API_URL}/api/events`, {
             method: 'POST',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(values)
-        }, {})
+            body: JSON.stringify(data)
+        })
 
-        console.log(res.json())
+        console.log(data)
 
         if(!res.ok) {
             toast.error("Couldn't add event");
         } else {
             const evt = await res.json()
-            console.log(evt)
+            router.push(`/events/${evt.data.attributes.slug}`)
         }
     }
 
@@ -53,6 +57,7 @@ export default function AddEventsPage() {
         e.preventDefault();
         const { name, value } = e.target;
         setValues({...values, [name]: value})
+        
     }
 
     
