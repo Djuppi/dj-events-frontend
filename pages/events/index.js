@@ -1,11 +1,12 @@
 import Layout from '@/components/Layout';
 import EventItem from '@/components/EventItem';
-import { API_URL } from '@/config/index';
+import Pagination from '@/components/Pagination';
+import { API_URL, PER_PAGE } from '@/config/index';
 import qs from 'qs';
 
-const PER_PAGE = 2;
+export default function EventsPage({events, pagination}) {
+  
 
-export default function EventsPage({events}) {
   return (
     <Layout>
       <h1>Events</h1>
@@ -16,24 +17,29 @@ export default function EventsPage({events}) {
           <EventItem key={evt.id} evt={evt} />
         ))}
       </ul>
+
+          <Pagination pagination={pagination} />
     </Layout>
   )
 }
 
 export async function getServerSideProps({query: {page = 1}}) {
+
   const params = {
     pagination: {
       page: page,
-      pageSize: PER_PAGE
+      pageSize: PER_PAGE,
+      withCount: true,
     },
     populate: 'image'
 }
 
+// Fetch events
 const query = qs.stringify(params);
-  const res = await fetch(`${API_URL}/api/events?_sort=date:ASC&${query}`);
-  const events = await res.json();
+  const eventRes = await fetch(`${API_URL}/api/events?_sort=date:ASC&${query}`);
+  const events = await eventRes.json();
 
   return {
-    props: { events: events.data },
+    props: { events: events.data, pagination: events.meta.pagination },
   }
 }
