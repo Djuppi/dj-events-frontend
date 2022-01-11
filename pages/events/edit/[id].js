@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Layout from '@/components/Layout';
 import GoBack from '@/components/Back';
 import Modal from '@/components/Modal';
+import ImageUpload from '@/components/ImageUpload';
 import { API_URL } from '@/config/index';
 import styles from '@/styles/Form.module.css';
 
@@ -21,7 +22,8 @@ export default function EditEventsPage({evt, id}) {
             time: evt.time,
             description: evt.description,
         });
-    const [imagePreview, setImagePreview] = useState(evt.image ? evt.image.formats.thumbnail.url : null);
+        console.log(evt.image)
+    const [imagePreview, setImagePreview] = useState(evt.image ? evt.image.data.attributes.formats.thumbnail.url: null);
     const [showModal, toggleModal] = useState(false);
 
     const router = useRouter();
@@ -56,6 +58,14 @@ export default function EditEventsPage({evt, id}) {
             const evt = await res.json()
             router.push(`/events/${evt.data.attributes.slug}`)
         }
+    }
+
+    const imageUploaded = async () => {
+        const res = await fetch(`${API_URL}/api/events/${id}?populate=image`)
+        const data = await res.json();
+        setImagePreview(data.data.attributes.image.data.attributes.formats.thumbnail.url)
+        toggleModal(false);
+        toast.success('Uploaded!')
     }
 
     const handleInputChange = (e) => {
@@ -166,7 +176,7 @@ export default function EditEventsPage({evt, id}) {
             </div>
 
             <Modal show={showModal} onClose={() => toggleModal(false)}>
-                IMAGE UPLOAD
+                <ImageUpload evtId={id} imageUploaded={imageUploaded} />
             </Modal>
         </Layout>
     )
@@ -174,7 +184,7 @@ export default function EditEventsPage({evt, id}) {
 
 
 export async function getServerSideProps({ params: {id}}) {
-    const res = await fetch(`${API_URL}/api/events/${id}`)
+    const res = await fetch(`${API_URL}/api/events/${id}?populate=image`)
     const event = await res.json();
     return {
         props: { evt: event.data.attributes, id: event.data.id }
