@@ -22,7 +22,6 @@ export default function EditEventsPage({evt, id}) {
             time: evt.time,
             description: evt.description,
         });
-        console.log(evt.image)
     const [imagePreview, setImagePreview] = useState(evt.image ? evt.image.data.attributes.formats.thumbnail.url: null);
     const [showModal, toggleModal] = useState(false);
 
@@ -49,8 +48,6 @@ export default function EditEventsPage({evt, id}) {
             },
             body: JSON.stringify(data)
         })
-
-        console.log(data)
 
         if(!res.ok) {
             toast.error("Couldn't add event");
@@ -183,9 +180,11 @@ export default function EditEventsPage({evt, id}) {
 }
 
 
-export async function getServerSideProps({ params: {id}}) {
+export async function getServerSideProps({ params: {id}, req}) {
     const res = await fetch(`${API_URL}/api/events/${id}?populate=image`)
     const event = await res.json();
+
+    console.log(req.headers.cookie)
     return {
         props: { evt: event.data.attributes, id: event.data.id }
     }
