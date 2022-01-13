@@ -31,13 +31,13 @@ export default async (req, res) => {
             }))
             res.status(200).json({user: data.user})
         } else {
-            if(!identifier) {
-                res.status(405).json({message: "Email is required to login"})
-            } else if(!password) {
-                res.status(405).json({message: "Password is required to login"})
-            } else {
+            Object.values(req.body).map((x, i) => {
+                if(x === '') {
+                    res.status(405).json({message: `Please provide your ${Object.keys(req.body)[i]}.`})
+                    return;
+                }
+            })
                 res.status(data.error.status).json({message: data.error.message})
-            }
             
         }
 

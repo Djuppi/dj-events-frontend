@@ -19,8 +19,6 @@ export default async (req, res) => {
 
         const data = await strapiRes.json() // Returns 500 error
 
-        console.log(data.jwt, 'TOKEN')
-
         if(strapiRes.ok) {
             // Set Cookie
             res.setHeader('Set-Cookie', cookie.serialize('token', data.jwt, {
@@ -32,15 +30,14 @@ export default async (req, res) => {
             }))
             res.status(200).json({user: data.user})
         } else {
-            if(!username) {
-                res.status(405).json({message: "Username is required to login"})
-            } else if(!email) {
-                res.status(405).json({message: "Email is required to login"})
-            } else if(!password) {
-                res.status(405).json({message: "Password is required to login"})
-            } else {
-                res.status(data.error.status).json({message: data.error.message})
-            }
+            Object.values(req.body).map((x, i) => {
+                if(x === '') {
+                    res.status(405).json({message: `Please provide your ${Object.keys(req.body)[i]}`}); 
+                    return;
+                }
+            })
+
+            res.status(data.error.status).json({message: data.error.message})
             
         }
 
