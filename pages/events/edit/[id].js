@@ -1,3 +1,4 @@
+import { parseCookies } from '@/helpers/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaImage } from 'react-icons/fa'
@@ -12,7 +13,7 @@ import ImageUpload from '@/components/ImageUpload';
 import { API_URL } from '@/config/index';
 import styles from '@/styles/Form.module.css';
 
-export default function EditEventsPage({evt, id}) {
+export default function EditEventsPage({evt, id, token}) {
     const [values, setValues] = useState({
             name: evt.name,
             performers: evt.performers,
@@ -44,12 +45,17 @@ export default function EditEventsPage({evt, id}) {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
         })
 
         if(!res.ok) {
+            if(res.status === 403 || res.status === 401) {
+                toast.error('Unauthorized!');
+                return;
+            }
             toast.error("Couldn't add event");
         } else {
             const evt = await res.json()
@@ -181,11 +187,13 @@ export default function EditEventsPage({evt, id}) {
 
 
 export async function getServerSideProps({ params: {id}, req}) {
+    const { token } = parseCookies(req)
+
     const res = await fetch(`${API_URL}/api/events/${id}?populate=image`)
     const event = await res.json();
 
     console.log(req.headers.cookie)
     return {
-        props: { evt: event.data.attributes, id: event.data.id }
+        props: { evt: event.data.attributes, id: event.data.id, token }
     }
 }
