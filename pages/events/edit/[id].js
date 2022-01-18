@@ -23,7 +23,8 @@ export default function EditEventsPage({evt, id, token}) {
             time: evt.time,
             description: evt.description,
         });
-    const [imagePreview, setImagePreview] = useState(evt.image ? evt.image.data.attributes.formats.thumbnail.url: null);
+
+    const [imagePreview, setImagePreview] = useState(evt.image.data ? evt.image.data.attributes.formats.thumbnail.url: null);
     const [showModal, toggleModal] = useState(false);
 
     const router = useRouter();
@@ -179,7 +180,7 @@ export default function EditEventsPage({evt, id, token}) {
             </div>
 
             <Modal show={showModal} onClose={() => toggleModal(false)}>
-                <ImageUpload evtId={id} imageUploaded={imageUploaded} />
+                <ImageUpload evtId={id} imageUploaded={imageUploaded} token={token} />
             </Modal>
         </Layout>
     )

@@ -1,3 +1,4 @@
+import { parseCookies } from '@/helpers/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
@@ -12,28 +13,12 @@ export default function EventPage({evt: {attributes, id}, evt}) {
 
     const router = useRouter();
 
-    const deleteEvent = async () => {
-        if(confirm('Are you sure?')) {
-            const res = await fetch(`${API_URL}/api/events/${id}`, {
-                method: 'DELETE'
-            })
-
-            const data = await res.json()
-
-            if(!res.ok) {
-                toast.error(data.message)
-            } else {
-                router.push('/events')
-            }
-        }
-    }
-
     const image = attributes.image.data ? attributes.image.data.attributes.formats.medium.url : '/images/event-default.png';
 
     return (
         <Layout>
             <div className={styles.event}>
-                <div className={styles.controls}>
+                {/*<div className={styles.controls}>
                     <Link href={`/events/edit/${id}`}>
                         <a>
                             <FaPencilAlt /> Edit Event
@@ -42,7 +27,7 @@ export default function EventPage({evt: {attributes, id}, evt}) {
                     <a href='#' className={styles.delete} onClick={deleteEvent}>
                         <FaTimes /> Delete Event
                     </a>
-                </div>
+                </div>*/}
                 <span>
                 {new Date(attributes.date).toLocaleDateString('da-DK')} at {attributes.time}
                 </span>
@@ -89,8 +74,8 @@ export const getStaticPaths = async () => {
    }
 }
 
-export const getStaticProps= async ({ params: {slug} }) => {
-    const res = await fetch(`${API_URL}/api/events?populate=image&filters[slug][$eq]=${slug}`)
+export const getStaticProps= async ({ params: {slug}, req }) => {
+    const res = await fetch(`${API_URL}/api/events?populate=image&filters[slug][$eq]=${slug}`);
     const events = await res.json();
 
     return {
