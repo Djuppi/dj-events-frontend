@@ -14,7 +14,9 @@
     "qs": "^6.10.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-geocode": "^0.2.3",
     "react-icons": "^4.3.1",
+    "react-map-gl": "^6.1.18",
     "react-toastify": "^8.1.0"
   },
   "devDependencies": {
