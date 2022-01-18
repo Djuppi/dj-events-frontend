@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { API_URL } from '@/config/index';
-import styles from '@/styles/Form.module.css'; 
 import { toast } from 'react-toastify';
+
+import styles from '@/styles/Form.module.css'; 
 
 export default function ImageUpload({evtId, imageUploaded, token}) {
     

@@ -7,6 +7,7 @@ const AuthContex = createContext();
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
+    const [userEvents, setUserEvents] = useState(null);
 
     const router = useRouter();
 
@@ -73,19 +74,20 @@ export const AuthProvider = ({children}) => {
     }
 
     // Check if user is logged in
-    const CheckUserLogginIn = async (user) => {
+    const CheckUserLogginIn = async () => {
         const res = await fetch(`${NEXT_URL}/api/user`);
         const data = await res.json();
 
         if(res.ok) {
-            setUser(data.user)
+            setUser(data.user.user);
+            setUserEvents(data.user.events);
         } else {
             setUser(null)
         }
     }
 
     return (
-        <AuthContex.Provider value={{user, error, register, login, logout}}>
+        <AuthContex.Provider value={{user, userEvents, error, register, login, logout, CheckUserLogginIn}}>
             {children}
         </AuthContex.Provider>
     )

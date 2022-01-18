@@ -1,30 +1,27 @@
-import { parseCookies } from '@/helpers/index';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { API_URL } from '@/config/index';
+
 import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/router';
-import { FaPencilAlt, FaTimes } from 'react-icons/fa'
+
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
-import { API_URL } from '@/config/index';
 import styles from '@/styles/Event.module.css';
 
-export default function EventPage({evt: {attributes, id}, evt}) {
-
-    const router = useRouter();
+export default function EventPage({evt: {attributes}}) {
 
     const image = attributes.image.data ? attributes.image.data.attributes.formats.medium.url : '/images/event-default.png';
 
     return (
         <Layout>
             <div className={styles.event}>
-                {/*<div className={styles.controls}>
+                {/*isMyEvent && <div className={styles.controls}>
                     <Link href={`/events/edit/${id}`}>
                         <a>
                             <FaPencilAlt /> Edit Event
                         </a>
                     </Link>
-                    <a href='#' className={styles.delete} onClick={deleteEvent}>
+                    <a href='#' className={styles.delete} onClick={deleteEvent(id, token)}>
                         <FaTimes /> Delete Event
                     </a>
                 </div>*/}
@@ -60,7 +57,7 @@ export default function EventPage({evt: {attributes, id}, evt}) {
 }
 
 export const getStaticPaths = async () => {
-   const res = await fetch(`${API_URL}/api/events?populate=image`);
+   const res = await fetch(`${API_URL}/api/events`);
 
    const events = await res.json();
 
@@ -72,10 +69,11 @@ export const getStaticPaths = async () => {
        paths,
        fallback: true
    }
-}
+};
 
-export const getStaticProps= async ({ params: {slug}, req }) => {
-    const res = await fetch(`${API_URL}/api/events?populate=image&filters[slug][$eq]=${slug}`);
+export const getStaticProps= async ({ params: {slug} }) => {
+    
+    const res = await fetch(`${API_URL}/api/events?filters[slug][$eq]=${slug}`);
     const events = await res.json();
 
     return {
@@ -84,15 +82,4 @@ export const getStaticProps= async ({ params: {slug}, req }) => {
         },
         revalidate: 1,
     }
-}
-
-// export async function getServerSideProps({ query: {slug} }) {
-//     const res = await fetch(`${API_URL}/api/events/${slug}`)
-//     const events = await res.json();
-
-//     return {
-//         props: {
-//             evt: events[0]
-//         }
-//     }
-// }
+};

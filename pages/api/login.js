@@ -18,8 +18,6 @@ export default async (req, res) => {
 
         const data = await strapiRes.json() // Returns 500 error
 
-        console.log(data.jwt, 'TOKEN')
-
         if(strapiRes.ok) {
             // Set Cookie
             res.setHeader('Set-Cookie', cookie.serialize('token', data.jwt, {

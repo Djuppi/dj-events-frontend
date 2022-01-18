@@ -154,7 +154,6 @@ export default function AddEventsPage({token}) {
 
 export async function getServerSideProps({req}) {
     const { token } = parseCookies(req);
-    console.log(token)
 
     return {
         props: { token }

@@ -1,10 +1,8 @@
+import { useRouter } from 'next/router';
+import { API_URL } from '@/config/index';
 import Layout from '@/components/Layout';
 import GoBack from '@/components/Back';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
 import EventItem from '@/components/EventItem';
-import { API_URL } from '@/config/index';
 import qs from 'qs';
 
 export default function SearchPage({events}) {

@@ -1,7 +1,7 @@
+import { API_URL, PER_PAGE } from '@/config/index';
 import Layout from '@/components/Layout';
 import EventItem from '@/components/EventItem';
 import Pagination from '@/components/Pagination';
-import { API_URL, PER_PAGE } from '@/config/index';
 import qs from 'qs';
 
 export default function EventsPage({events, pagination}) {

@@ -1,7 +1,9 @@
 import { FaUser } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect, useContext } from 'react';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import AuthContex from '@/context/AuthContext';

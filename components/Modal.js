@@ -1,6 +1,7 @@
-import {useState, useEffect} from 'react';
-import ReactDom from 'react-dom';
+import { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
+
+import ReactDom from 'react-dom';
 import styles from '@/styles/Modal.module.css';
 
 export default function Modal({ show, onClose, children, title }) {

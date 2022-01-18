@@ -1,14 +1,15 @@
 import { parseCookies } from "@/helpers/index";
 import { useRouter } from 'next/router';
+import { API_URL } from '@/config/index';
+
 import Layout from "@/components/Layout"
 import DashboardEvent from "@/components/DashboardEvent"
-import { API_URL } from '@/config/index';
 import styles from '@/styles/Dashboard.module.css';
 
 export default function dashboardPage({user, events, token}) {
     
     const router = useRouter();
-    
+
     const deleteEvent = async (id) => {
         if(confirm('Are you sure?')) {
             const res = await fetch(`${API_URL}/api/events/${id}`, {
@@ -17,9 +18,9 @@ export default function dashboardPage({user, events, token}) {
                     Authorization: `Bearer ${token}`
                 }
             })
-
+    
             const data = await res.json()
-
+    
             if(!res.ok) {
                 toast.error(data.message)
             } else {
@@ -27,6 +28,7 @@ export default function dashboardPage({user, events, token}) {
             }
         }
     }
+    
     return (
         <Layout title="User dashboard">
             <div className={styles.dash}>

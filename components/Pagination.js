@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-
 export default function Pagination({pagination}) {
     const { page, pageCount, total } = pagination;
     const lastPage = pageCount;

@@ -1,7 +1,8 @@
+import { API_URL } from '@/config/index';
+
 import Layout from '@/components/Layout';
 import EventItem from '@/components/EventItem';
 import Link from 'next/link';
-import { API_URL } from '@/config/index';
 
 export default function HomePage({events}) {
   return (
