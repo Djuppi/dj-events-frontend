@@ -16,7 +16,7 @@ export default async function (req, res){
             }),
         })
 
-        const data = await strapiRes.json() // Returns 500 error
+        const data = await strapiRes.json();
 
         if(strapiRes.ok) {
             // Set Cookie
