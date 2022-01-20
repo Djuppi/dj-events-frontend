@@ -33,7 +33,7 @@ export default function dashboardPage({user, events, token}) {
         <Layout title="User dashboard">
             <div className={styles.dash}>
                 <h1>Dashboard</h1>
-                <h3>{user.username}'s Events</h3>
+                <h3>{`${user.username}'s` || 'My'} Events</h3>
 
                 {events.map((evt) => {
                     return(
