@@ -54,7 +54,7 @@ export default function EventPage({evt: {attributes}}) {
             </div>
         </Layout>
     )
-}
+};
 
 // export const getStaticPaths = async () => {
 //    const res = await fetch(`${API_URL}/api/events`);
