@@ -6,7 +6,7 @@ import Layout from "@/components/Layout"
 import DashboardEvent from "@/components/DashboardEvent"
 import styles from '@/styles/Dashboard.module.css';
 
-export default function dashboardPage({user, events, token}) {
+export default function DashboardPage({user, events, token}) {
     
     const router = useRouter();
 

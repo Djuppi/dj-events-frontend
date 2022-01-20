@@ -9,7 +9,7 @@ import Layout from '@/components/Layout';
 import AuthContex from '@/context/AuthContext';
 import styles from '@/styles/AuthForm.module.css';
 
-export default function registerPage() {
+export default function RegisterPage() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
