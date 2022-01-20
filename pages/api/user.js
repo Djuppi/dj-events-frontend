@@ -10,18 +10,19 @@ export default async (req, res) => {
 
         const { token } = cookie.parse(req.headers.cookie);
 
-        const strapieRes = await fetch(`${API_URL}/api/events/me`, {
+        const strapiRes = await fetch(`${API_URL}/api/events/me`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
 
-        const user = await strapieRes.json();
+        const user = await strapiRes.json();
 
-        if(strapieRes.ok) {
+        if(strapiRes.ok) {
             res.status(200).json({user})
         } else {
+            console.log(strapiRes)
             res.status(403).json({message: 'User Forbidden'})
         }
     } else {
