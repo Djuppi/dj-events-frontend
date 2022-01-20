@@ -22,7 +22,6 @@ export default async (req, res) => {
         if(strapiRes.ok) {
             res.status(200).json({user})
         } else {
-            console.log(strapiRes)
             res.status(403).json({message: 'User Forbidden'})
         }
     } else {
