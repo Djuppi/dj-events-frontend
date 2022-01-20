@@ -51,9 +51,6 @@ export default function EventPage({evt: {attributes}}) {
                         Go Back
                     </a>
                 </Link>
-
-
-
             </div>
         </Layout>
     )
