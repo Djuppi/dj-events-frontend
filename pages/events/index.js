@@ -38,7 +38,6 @@ export async function getServerSideProps({query: {page = 1}}) {
 const query = qs.stringify(params);
   const eventRes = await fetch(`${API_URL}/api/events?${query}`);
   const events = await eventRes.json();
-  console.log(events)
 
   return {
     props: { events: events.data, pagination: events.meta.pagination },
