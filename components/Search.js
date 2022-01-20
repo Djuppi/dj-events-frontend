@@ -25,4 +25,4 @@ export default function Search() {
             </form>
         </div>
     )
-}
+};
