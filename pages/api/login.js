@@ -13,7 +13,7 @@ export default async function (req, res){
             body: JSON.stringify({
                 identifier, 
                 password 
-            })
+            }),
         })
 
         const data = await strapiRes.json() // Returns 500 error
