@@ -43,7 +43,7 @@ export default function DashboardPage({user, events, token}) {
             </div>
         </Layout>
     )
-}
+};
 
 export async function getServerSideProps({req}) {
     const { token } = parseCookies(req)
@@ -60,4 +60,4 @@ export async function getServerSideProps({req}) {
     return {
         props: { user: data.user, events: data.events, token }
     }
-}
+};
