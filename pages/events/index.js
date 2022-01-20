@@ -31,13 +31,14 @@ export async function getServerSideProps({query: {page = 1}}) {
       pageSize: PER_PAGE,
       withCount: true,
     },
-    populate: 'image'
+    sort: ['date:asc']
 }
 
 // Fetch events
 const query = qs.stringify(params);
-  const eventRes = await fetch(`${API_URL}/api/events?_sort=date:ASC&${query}`);
+  const eventRes = await fetch(`${API_URL}/api/events?${query}`);
   const events = await eventRes.json();
+  console.log(events)
 
   return {
     props: { events: events.data, pagination: events.meta.pagination },
