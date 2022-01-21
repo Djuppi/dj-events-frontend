@@ -36,7 +36,7 @@ export default function dashboardPage({user, events, token}) {
                 <h1>Dashboard</h1>
                 <h3>My Events</h3>
 
-                {events.length > 0 ? events.map((evt) => {
+                {events && events.length > 0 ? events.map((evt) => {
                     return(
                         <DashboardEvent evt={evt} key={evt.id} handleDelete={deleteEvent} />
                     )

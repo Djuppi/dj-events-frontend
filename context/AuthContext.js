@@ -49,10 +49,9 @@ export const AuthProvider = ({children}) => {
             })
         })
 
-        const data = await res.json()
+        const data = await res.json();
 
         if(res.ok) {
-            
             setUser(data.user)
             router.push('/account/dashboard')
         } else {
