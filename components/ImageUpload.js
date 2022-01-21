@@ -9,7 +9,6 @@ export default function ImageUpload({evtId, imageUploaded, token}) {
     const [image, setImage] = useState(null);
 
     const handleSubmit = async (e) => {
-        console.log(image)
         e.preventDefault();
         const formData = new FormData();
         formData.append('files', image);

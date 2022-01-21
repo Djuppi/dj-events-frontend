@@ -76,6 +76,7 @@ export const AuthProvider = ({children}) => {
     const CheckUserLogginIn = async () => {
         const res = await fetch(`${NEXT_URL}/api/user`);
         const data = await res.json();
+        console.log(data)
 
         if(res.ok) {
             setUser(data.user.user);

@@ -34,7 +34,7 @@ export default function dashboardPage({user, events, token}) {
         <Layout title="User dashboard">
             <div className={styles.dash}>
                 <h1>Dashboard</h1>
-                <h3>My Events</h3>
+                <h3>{user ? `${user.username}'s` : 'My'} Events</h3>
 
                 {events && events.length > 0 ? events.map((evt) => {
                     return(
@@ -64,7 +64,6 @@ export async function getServerSideProps({req}) {
     })
 
     const data = await res.json();
-    console.log(data)
 
     return {
         props: { user: data.user, events: data.events, token }
