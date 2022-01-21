@@ -24,6 +24,7 @@ export default function EditEventsPage({evt, id, token}) {
             time: evt.time,
             description: evt.description,
         });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [imagePreview, setImagePreview] = useState(evt.image.data ? evt.image.data.attributes.formats.thumbnail.url: null);
     const [showModal, toggleModal] = useState(false);
@@ -32,6 +33,7 @@ export default function EditEventsPage({evt, id, token}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
         
         // Validation
         const hasEmptyFields = Object.values(values).some((el) => el === '');
@@ -63,6 +65,7 @@ export default function EditEventsPage({evt, id, token}) {
             const evt = await res.json()
             router.push(`/events/${evt.data.attributes.slug}`)
         }
+        setIsSubmitting(false);
     }
 
     const imageUploaded = async () => {
@@ -160,7 +163,7 @@ export default function EditEventsPage({evt, id, token}) {
                         />
                 </div>
 
-                <input type='submit' value='Update Event' className='btn' />
+                <input type='submit' value={`${isSubmitting ? '' : 'Update Event'}`} className={`btn ${isSubmitting ? 'loading' : '' }`} />
             </form>
             <h2>Event Image</h2>
             {imagePreview ? (

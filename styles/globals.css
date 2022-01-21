@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+@keyframes button-loading-spinner {
+  from {
+      transform: rotate(0turn);
+  }
+
+  to {
+      transform: rotate(1turn);
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,6 +43,46 @@ h1 {
   cursor: pointer;
   border: 0;
   border-radius: 5px;
+  position: relative;
+  transition: padding-right .3s ease-out;
+}
+
+.btn--loading {
+  
+  background: grey;
+  color: black;
+  cursor: wait;
+}
+
+.btn.loading {
+  background-color: #CCC;
+  padding-right: 40px;
+}
+.btn.loading:after {
+  content: "";
+  position: absolute;
+  border-radius: 100%;
+  right: 6px;
+  top: 50%;
+  width: 0px;
+  height: 0px;
+  margin-top: -2px;
+  border: 2px solid rgba(243, 7, 7, 0.5);
+  border-left-color: #FFF;
+  border-top-color: #FFF;
+  animation: spin .6s infinite linear, grow .3s forwards ease-out;
+}
+@keyframes spin { 
+  to {
+      transform: rotate(359deg);
+  }
+}
+@keyframes grow { 
+  to {
+      width: 14px;
+      height: 14px;
+      margin-top: -8px;
+  }
 }
 
 .btn:hover {

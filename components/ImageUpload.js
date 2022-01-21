@@ -7,9 +7,11 @@ import styles from '@/styles/Form.module.css';
 export default function ImageUpload({evtId, imageUploaded, token}) {
     
     const [image, setImage] = useState(null);
+    const [isSubmitting, setIsSumbitting] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSumbitting(true)
         const formData = new FormData();
         formData.append('files', image);
         formData.append('ref', 'api::event.event');
@@ -28,7 +30,7 @@ export default function ImageUpload({evtId, imageUploaded, token}) {
         } else {
             toast.error("Couldn't upload image");
         }
-
+        setIsSumbitting(false);
     }
 
     const handleFileChange = (e) => {
@@ -42,7 +44,9 @@ export default function ImageUpload({evtId, imageUploaded, token}) {
                 <div className={styles.file}>
                     <input type="file" onChange={handleFileChange} />
                 </div>
-                <input className="btn" type="submit" value="Upload" />
+                <button className={`btn ${isSubmitting ? 'loading' : ''}`} type="submit" value="Upload">
+                    {isSubmitting ? 'Uploading' : 'Upload'}
+                </button>
             </form>
         </div>
     )
