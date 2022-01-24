@@ -187,7 +187,16 @@ export default function EditEventsPage({evt, id, token}) {
 };
 
 export async function getServerSideProps({ params: {id}, req}) {
-    const { token } = parseCookies(req)
+    const { token } = parseCookies(req);
+
+    if(!token) {
+        return {
+            redirect: { 
+                destination: '/account/login',
+                permanent: false
+            }
+        }
+    }
 
     const res = await fetch(`${API_URL}/api/events/${id}?populate=image`)
     const event = await res.json();

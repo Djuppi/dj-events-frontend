@@ -11,11 +11,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import EventMap from '@/components/EventMap';
+import GoBack from '@/components/Back';
 import styles from '@/styles/Event.module.css';
 
 export default function EventPage({evt: {attributes, id}, userEvents}) {
     
-    const isMyEvent = userEvents.some(evt => evt.id === id);
+    const isMyEvent = userEvents ? userEvents.some(evt => evt.id === id) : false
 
     const router = useRouter();
 
@@ -43,6 +44,9 @@ export default function EventPage({evt: {attributes, id}, userEvents}) {
     return (
         <Layout>
             <div className={styles.event}>
+                <p>
+                    <GoBack href='/events' />
+                </p>
                 {isMyEvent && <div className={styles.controls}>
                     <Link href={`/events/edit/${id}`}>
                         <a>
@@ -112,15 +116,19 @@ export default function EventPage({evt: {attributes, id}, userEvents}) {
 // };
 
 export const getServerSideProps= async ({ query: {slug}, req }) => {
-    const { token } = parseCookies(req)
+    const { token } = parseCookies(req);
 
-    const userRes = await fetch(`${API_URL}/api/events/me`, {
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
-    });
-    const userData = await userRes.json()
+    let userData;
+
+    if(token) {
+        const userRes = await fetch(`${API_URL}/api/events/me`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        userData = await userRes.json()
+    }
     
     const res = await fetch(`${API_URL}/api/events?filters[slug][$eq]=${slug}`);
     const events = await res.json();
@@ -128,7 +136,7 @@ export const getServerSideProps= async ({ query: {slug}, req }) => {
     return {
         props: {
             evt: events.data[0],
-            userEvents: userData.events
+            userEvents: userData ? userData.events : false
         },
     }
 };
