@@ -76,12 +76,6 @@ export default function EventPage({evt: {attributes, id}, userEvents}) {
                 <p>{attributes.address}</p>
 
                 <EventMap evt={attributes} />
-
-                <Link href='/events'>
-                    <a className={styles.back}>
-                        Go Back
-                    </a>
-                </Link>
             </div>
         </Layout>
     )
