@@ -6,7 +6,13 @@
     padding: 13px;
     box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
   }
-  
+
+  [data-theme='dark'] .event {
+    background-color: rgb(32, 32, 32);
+    box-shadow: 2px 3px 5px rgba(49, 49, 49, 0.1);
+    --foreground: white;
+  }
+
   .img {
     flex: 1;
     margin: 10px;

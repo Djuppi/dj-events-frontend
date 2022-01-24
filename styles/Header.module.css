@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #fff;
     color: #333;
     height: 60px;
     padding: 0 30px;
@@ -12,10 +11,34 @@
   .header a {
     color: #333;
     margin-right: 20px;
+    cursor: pointer;
+  }
+
+  .header .theme-trigger.dark {
+    animation: fade1 .5s linear;
+  }
+
+  @keyframes fade1 {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+    
+  }
+
+  [data-theme='dark'] .header a {
+    color: rgb(146, 146, 146);
+    cursor: pointer;
   }
   
   .header a:hover {
     color: #000;
+  }
+
+  [data-theme='dark'] .header a:hover {
+    color: rgb(255, 255, 255);
   }
   .header ul {
     display: flex;
@@ -25,13 +48,17 @@
   }
   
   .logo {
-    color: red;
+    color: red !important;
     font-size: 20px;
     text-transform: uppercase;
   }
   
   .logo a {
-    color: red;
+    color: red !important;
+  }
+
+  .logo a:hover {
+    color: white !important;
   }
   
   @media (max-width: 768px) {
