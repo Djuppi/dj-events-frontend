@@ -4,6 +4,7 @@ import Link from 'next/link';
 import styles from '@/styles/Header.module.css';
 import Search from './Search'
 import AuthContex from '@/context/AuthContext';
+import ThemeChanger from '@/components/ThemeChanger'
 
 export default function Header() {
     const {user, logout} = useContext(AuthContex)
@@ -14,6 +15,9 @@ export default function Header() {
                 <Link href='/'>
                     <a>DJ Events</a>
                 </Link>
+            </div>
+            <div>
+                <ThemeChanger />
             </div>
             <Search />
             <nav>

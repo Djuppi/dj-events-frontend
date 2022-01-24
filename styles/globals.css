@@ -1,4 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+:root {
+  /* Your default theme */
+  --background: white;
+  --foreground: black;
+}
+
+[data-theme='dark'] {
+  --background: black;
+  --foreground: white;
+}
+
+[data-theme='dark'].event {
+  --background: rgb(46, 46, 46);
+  --foreground: white;
+}
 
 * {
   box-sizing: border-box;
@@ -47,8 +62,12 @@ h1 {
   border: 0;
   border-radius: 5px;
   padding: 5px 15px;
-  margin: 0 20px;
   cursor: pointer;
+}
+
+[data-theme='dark'] .btn-secondary {
+  background: #fff;
+  color: black !important;
 }
 
 .btn-secondary:hover {

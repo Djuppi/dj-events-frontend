@@ -1,10 +1,13 @@
 import { AuthProvider } from '@/context/AuthContext'
+import { ThemeProvider } from 'next-themes'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-        <Component {...pageProps} />
+      <ThemeProvider disableTransitionOnChange>
+          <Component {...pageProps} />
+        </ThemeProvider>
     </AuthProvider>
   )
 }
